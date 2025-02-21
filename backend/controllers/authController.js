@@ -5,8 +5,51 @@ import {User, OAuthClient, OAuthToken} from "../models/index.js";
 
 export default class AuthController {
 
+    static isEmail(email) {
+        // Email regex.
+        // TODO: Maybe refactor this to a better regex and multiple checks for better validation and feedback.
+        const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return re.test(email);
+    }
+
     static async register(req, res) {
-        res.status(200).json({ message: "Register route" });
+        /// Data validation
+        const { email, username, password } = req.body;
+        if (!email || !username || !password) {
+            return res.status(400).json({ message: "All fields are required", type: email ? (username ? "password" : "username") : "email" });
+        }
+        
+        if (!this.isEmail(email)) {
+            return res.status(400).json({ message: "Invalid email format", type: "email" });
+        }
+
+        /// Now do the checks on the password
+        if (password.length < 8) {
+            return res.status(400).json({ message: "Password must be at least 8 characters long", type: "password" });
+        }
+
+        // Check if password contains at least one number
+        if (!/\d/.test(password)) {
+            return res.status(400).json({ message: "Password must contain at least one number", type: "password" });
+        }
+
+        // Check if password contains at least one uppercase letter
+        if (!/[A-Z]/.test(password)) {
+            return res.status(400).json({ message: "Password must contain at least one uppercase letter", type: "password" });
+        }
+
+        // Check if password contains at least one lowercase letter
+        if (!/[a-z]/.test(password)) {
+            return res.status(400).json({ message: "Password must contain at least one lowercase letter", type: "password" });
+        }
+
+        // Check if password contains at least one special character
+        if (!/[!@#$%^&*]/.test(password)) {
+            return res.status(400).json({ message: "Password must contain at least one special character", type: "password" });
+        }
+
+        
+
     }
 
     static async login(req, res) {
