@@ -1,26 +1,31 @@
 import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import config from '../config/config.js';
 
 import User from './user.js';
 import OAuthClient from './oauthclient.js';
 import OAuthToken from './oauthtoken.js';
 
 const sequelize = new Sequelize({
-  dialect: 'postgres',
-  host: process.env.DB_HOST,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
+  dialect: config.development.dialect,
+  host: config.development.host,
+  port: config.development.port,
+  username: config.development.username,
+  password: config.development.password,
+  database: config.development.database,
+  logging: false
+})
 
 User.init(sequelize);
 OAuthClient.init(sequelize);
 OAuthToken.init(sequelize);
 
-// Si tu as des associations, tu peux les définir ici aussi, par exemple :
-User.hasMany(OAuthToken);
-OAuthToken.belongsTo(User);
+User.sync();
+OAuthClient.sync();
+OAuthToken.sync();
+
+// Définition des relations
+OAuthToken.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(OAuthToken, { foreignKey: 'userId' });
+OAuthClient.hasMany(OAuthToken, { foreignKey: 'clientId' });
 
 export { sequelize, User, OAuthClient, OAuthToken };

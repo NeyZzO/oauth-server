@@ -1,6 +1,6 @@
 import {Model, DataTypes, Sequelize, DatabaseError} from "sequelize";
 
-class User extends Model {
+export default class User extends Model {
 
     /**
      * 
@@ -9,7 +9,7 @@ class User extends Model {
     static init(sequelize) {
         super.init({
             uuid: {
-                type: DataTypes.UUIDV4,
+                type: DataTypes.UUID,
                 defaultValue: DataTypes.UUIDV4,
                 primaryKey: true,
             },
