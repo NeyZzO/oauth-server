@@ -16,7 +16,7 @@ First, you need to clone the project using
 ```sh
 git clone https://github.com/NeyZzO/oauth-server/
 ```
-Then, `cd` into the cloned repo and install the dependencies for front-end and/or backend *(the backend contains a built version of the frontend in the `backend/views/` directory)* <br> I recommand using [pnpm](https://pnpm.io/fr/).
+Then, `cd` into the cloned repo and install the dependencies for front-end and/or backend *(the backend contains a built version of the frontend in the `backend/views/` directory)* <br> I recommend using [pnpm](https://pnpm.io/fr/).
 ```sh
 pnpm install
 ```
