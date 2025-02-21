@@ -1,0 +1,165 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.11">
+  <diagram name="Page-1" id="edLnSJOzuFZX-AQbWLe4">
+    <mxGraphModel dx="2868" dy="1568" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-1" value="Client" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="295" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-2" value="Application" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="635" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-3" value="OAuth server" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="975" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-4" value="This can be any one of your applications that require authentication" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="605" y="260" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-5" value="This is the client or the user" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="265" y="260" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-6" value="This is the authentication server that possesses a lot of information regarding the users" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="945" y="260" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-7" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="750" as="sourcePoint" />
+            <mxPoint x="694" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-8" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1034" y="750" as="sourcePoint" />
+            <mxPoint x="1034.41" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-9" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="354" y="750" as="sourcePoint" />
+            <mxPoint x="354.4100000000001" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-10" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="420" as="sourcePoint" />
+            <mxPoint x="695" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-11" value="The user accesses a protected route on your application and is not yet logged in" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="435" y="380" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-12" value="" style="endArrow=none;html=1;rounded=0;startFill=1;startArrow=classicThin;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="470" as="sourcePoint" />
+            <mxPoint x="695" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-13" value="Redirects to auth.whatever.xyz/auth/login?client_id=abc123&amp;amp;redirect_uri=xxx.xxx" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="402.5" y="440" width="245" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-17" value="" style="endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="518.8199999999999" as="sourcePoint" />
+            <mxPoint x="1035" y="519" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-18" value="&lt;font style=&quot;color: rgb(151, 208, 119);&quot;&gt;GET /auth/login?client_id=abc123&amp;amp;redirect_uri=xxx.xxx&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;fontColor=#97D077;" vertex="1" parent="1">
+          <mxGeometry x="775" y="480" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-19" value="" style="endArrow=none;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;startArrow=classicThin;startFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="539.9999999999999" as="sourcePoint" />
+            <mxPoint x="1035" y="540.18" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-20" value="Returns login page" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;fontColor=#318220;" vertex="1" parent="1">
+          <mxGeometry x="460" y="520" width="130" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-21" value="" style="endArrow=classicThin;html=1;rounded=0;endFill=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="570" as="sourcePoint" />
+            <mxPoint x="1035" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-22" value="POST /auth/login" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#7EA6E0;" vertex="1" parent="1">
+          <mxGeometry x="822.5" y="550" width="105" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=halfCircle;endFill=0;dashed=1;dashPattern=12 12;curved=1;" edge="1" parent="1" source="BwHFnRtTbtm2jGfJ3kP5-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1035" y="520" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1165" y="340" />
+              <mxPoint x="1165" y="500" />
+              <mxPoint x="1115" y="500" />
+              <mxPoint x="1115" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-24" value="Here, if the client_id or the redirect_uri doesn&#39;t belong to an authorized application, the server will return a 403 error" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1275" y="310" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-26" value="This prevents unauthorized applications to access users data: This is the first level of protection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1275" y="380" width="230" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-27" value="" style="endArrow=none;html=1;rounded=0;endFill=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startArrow=classicThin;startFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="601" as="sourcePoint" />
+            <mxPoint x="1035" y="601" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-30" value="Grants authorization code" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#7EA6E0;" vertex="1" parent="1">
+          <mxGeometry x="801.25" y="580" width="147.5" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-32" value="" style="endArrow=classicThin;html=1;rounded=0;endFill=1;fillColor=#f8cecc;strokeColor=#b85450;startArrow=none;startFill=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="633" as="sourcePoint" />
+            <mxPoint x="1035" y="633" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;dashed=1;dashPattern=12 12;fillColor=#ffe6cc;strokeColor=#d79b00;endArrow=halfCircle;endFill=0;" edge="1" parent="1" source="BwHFnRtTbtm2jGfJ3kP5-33">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1035" y="600" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1110" y="590" />
+              <mxPoint x="1110" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-33" value="Here it redirects to the redirect_uri?callback=authorization_code" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1185" y="560" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-34" value="You&#39;ll need to exchange your authorization_code with an authorization_token which is the Bearer token to access every protected route of the api" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="1415" y="555" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-37" value="Exchange the authorization_code for a authorization_token" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#EA6B66;" vertex="1" parent="1">
+          <mxGeometry x="771.25" y="610" width="203.75" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-41" value="" style="endArrow=none;html=1;rounded=0;endFill=1;fillColor=#f8cecc;strokeColor=#b85450;startArrow=classicThin;startFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="695" y="670" as="sourcePoint" />
+            <mxPoint x="1035" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-42" value="If the authorization_code is ok, give the token" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#EA6B66;" vertex="1" parent="1">
+          <mxGeometry x="771.25" y="640" width="203.75" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-43" value="" style="endArrow=none;html=1;rounded=0;endFill=1;fillColor=#f8cecc;strokeColor=#b85450;startArrow=classicThin;startFill=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="355" y="690" as="sourcePoint" />
+            <mxPoint x="695" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-44" value="Either give the tokens directly to the user or store it in a session in the application storage and give a sessionID" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#EA6B66;" vertex="1" parent="1">
+          <mxGeometry x="409.06000000000006" y="650" width="231.88" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-46" value="OAuth Grant Flow" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=40;fontStyle=1;fontFamily=Lucida Console;" vertex="1" parent="1">
+          <mxGeometry x="743" y="90" width="435" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="BwHFnRtTbtm2jGfJ3kP5-47" value="Well I don&#39;t know if you can cal this a &quot;OAuth server&quot; but whatever it&#39;s how I&#39;ve done it so I don&#39;t care" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="750" y="130" width="420" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
