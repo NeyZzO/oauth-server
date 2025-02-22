@@ -19,13 +19,15 @@ User.init(sequelize);
 OAuthClient.init(sequelize);
 OAuthToken.init(sequelize);
 
-User.sync();
-OAuthClient.sync();
-OAuthToken.sync();
-
 // Définition des relations
 OAuthToken.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(OAuthToken, { foreignKey: 'userId' });
 OAuthClient.hasMany(OAuthToken, { foreignKey: 'clientId' });
+
+(async () => {
+  await User.sync();
+  await OAuthClient.sync();
+  await OAuthToken.sync();
+})();
 
 export { sequelize, User, OAuthClient, OAuthToken };
