@@ -7,7 +7,6 @@ export default class AuthController {
 
     static isEmail(email) {
         // Email regex.
-        // TODO: Maybe refactor this to a better regex and multiple checks for better validation and feedback.
         const re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         return re.test(email);
     }
