@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Loader2 } from "lucide-react";
 
 import {
