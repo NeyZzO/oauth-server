@@ -4,5 +4,30 @@
         "activityBar.background": "#053609",
         "titleBar.activeBackground": "#074B0D",
         "titleBar.activeForeground": "#F2FEF3"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MariaDB",
+            "name": "discordbot",
+            "group": "local",
+            "database": "discordbot",
+            "username": "admin"
+        },
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Local",
+            "username": "postgres",
+            "group": "Local",
+            "database": "authserver"
+        }
+    ]
 }
