@@ -1,219 +1,195 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router";
-import { Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import axios, { AxiosResponse } from "axios";
-import { Loader2 } from "lucide-react";
+"use client"
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import type React from "react"
 
-interface RegisterData {
-    username: string;
-    email: string;
-    password: string;
-    rePassword: string;
+import { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router";
+import { Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Separator } from "@/components/ui/separator"
+import Discord from "@/components/svgs/Discord";
+import Google from "@/components/svgs/Google";
+
+type FormData = {
+  username: string
+  email: string
+  password: string
+  confirmPassword: string
+}
+
+type FormErrors = {
+  [K in keyof FormData]: string
 }
 
 export default function SignUpForm() {
-    const [theme, setTheme] = useState<"light" | "dark">("light");
-    // * Form input states
-    const [username, setUsername] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [rePassword, setRePassword] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">("light")
+  const [formData, setFormData] = useState<FormData>({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
+  const [errors, setErrors] = useState<FormErrors>({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  })
 
-    // TODO: Validation states ? (maybe not needed)
+  const location = useLocation();
 
-    // * button loading state
-    const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
+    if (isDarkMode) {
+      setTheme("dark")
+      document.documentElement.classList.add("dark")
+    }
+  }, [])
 
-    useEffect(() => {
-        const isDarkMode = window.matchMedia(
-            "(prefers-color-scheme: dark)"
-        ).matches;
-        if (isDarkMode) {
-            setTheme("dark");
-            document.documentElement.classList.add("dark");
-        }
-    }, []);
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    document.documentElement.classList.toggle("dark")
+  }
 
-    const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
-        setTheme(newTheme);
-        document.documentElement.classList.toggle("dark");
-    };
+  const validateField = (name: keyof FormData, value: string): string => {
+    switch (name) {
+      case "username":
+        return value ? "" : "Username is required"
+      case "email":
+        return value ? (/\S+@\S+\.\S+/.test(value) ? "" : "Email is invalid") : "Email is required"
+      case "password":
+        return value ? (value.length >= 8 ? "" : "Password must be at least 8 characters") : "Password is required"
+      case "confirmPassword":
+        return value === formData.password ? "" : "Passwords do not match"
+      default:
+        return ""
+    }
+  }
 
-    const registerUser = async () => {
-        setIsLoading(true);
-        const data: RegisterData = {username,email,password,rePassword};
-        console.log(data);
-        let ret: AxiosResponse;
-        try {
-            ret = await axios.post('http://localhost:3000/auth/register?client_id=dbg_abc123&redirect_uri=http://localhost:4000/auth/login', {
-                username, password, email, rePassword
-            });
-            console.log(ret.data);
-            setIsLoading(false);
-        } catch (err: unknown) {
-            console.error(err);
-        }
-    };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+    setErrors((prev) => ({ ...prev, [name]: validateField(name as keyof FormData, value) }))
+  }
 
-    return (
-        <div className="min-h-screen w-full bg-background transition-colors duration-300">
-            <div className="absolute top-4 right-4">
-                <Button
-                    variant="outline"
-                    size="icon"
-                    onClick={toggleTheme}
-                    className="rounded-full"
-                >
-                    {theme === "light" ? (
-                        <Moon className="h-5 w-5" />
-                    ) : (
-                        <Sun className="h-5 w-5" />
-                    )}
-                    <span className="sr-only">Toggle theme</span>
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const newErrors = {
+      username: validateField("username", formData.username),
+      email: validateField("email", formData.email),
+      password: validateField("password", formData.password),
+      confirmPassword: validateField("confirmPassword", formData.confirmPassword),
+    }
+    setErrors(newErrors)
+
+    if (Object.values(newErrors).every((error) => error === "")) {
+      // Form is valid, you can submit it here
+      console.log("Form is valid", formData)
+    }
+  }
+
+  return (
+    <div className="min-h-screen w-full bg-background transition-colors duration-300">
+      <div className="absolute top-4 right-4">
+        <Button variant="outline" size="icon" onClick={toggleTheme} className="rounded-full">
+          {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+          <span className="sr-only">Toggle theme</span>
+        </Button>
+      </div>
+
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-md">
+          <Card className="border-border bg-card">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
+              <CardDescription>Choose your preferred sign-up method</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Button className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white">
+                  <Discord />
+                  Sign up with Discord
                 </Button>
-            </div>
-
-            <div className="min-h-screen flex items-center justify-center p-4">
-                <div className="w-full max-w-md">
-                    <Card className="border-border bg-card">
-                        <CardHeader className="space-y-1">
-                            <CardTitle className="text-2xl font-bold">
-                                Sign Up
-                            </CardTitle>
-                            <CardDescription>
-                                Choose your preferred sign-up method
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="space-y-2">
-                                <Button className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white cursor-pointer">
-                                    <svg
-                                        className="mr-2 h-4 w-4"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                        data-prefix="fab"
-                                        data-icon="discord"
-                                        role="img"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 640 512"
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M524.531,69.836a1.5,1.5,0,0,0-.764-.7A485.065,485.065,0,0,0,404.081,32.03a1.816,1.816,0,0,0-1.923.91,337.461,337.461,0,0,0-14.9,30.6,447.848,447.848,0,0,0-134.426,0,309.541,309.541,0,0,0-15.135-30.6,1.89,1.89,0,0,0-1.924-.91A483.689,483.689,0,0,0,116.085,69.137a1.712,1.712,0,0,0-.788.676C39.068,183.651,18.186,294.69,28.43,404.354a2.016,2.016,0,0,0,.765,1.375A487.666,487.666,0,0,0,176.02,479.918a1.9,1.9,0,0,0,2.063-.676A348.2,348.2,0,0,0,208.12,430.4a1.86,1.86,0,0,0-1.019-2.588,321.173,321.173,0,0,1-45.868-21.853,1.885,1.885,0,0,1-.185-3.126c3.082-2.309,6.166-4.711,9.109-7.137a1.819,1.819,0,0,1,1.9-.256c96.229,43.917,200.41,43.917,295.5,0a1.812,1.812,0,0,1,1.924.233c2.944,2.426,6.027,4.851,9.132,7.16a1.884,1.884,0,0,1-.162,3.126,301.407,301.407,0,0,1-45.89,21.83,1.875,1.875,0,0,0-1,2.611,391.055,391.055,0,0,0,30.014,48.815,1.864,1.864,0,0,0,2.063.7A486.048,486.048,0,0,0,610.7,405.729a1.882,1.882,0,0,0,.765-1.352C623.729,277.594,590.933,167.465,524.531,69.836ZM222.491,337.58c-28.972,0-52.844-26.587-52.844-59.239S193.056,219.1,222.491,219.1c29.665,0,53.306,26.82,52.843,59.239C275.334,310.993,251.924,337.58,222.491,337.58Zm195.38,0c-28.971,0-52.843-26.587-52.843-59.239S388.437,219.1,417.871,219.1c29.667,0,53.307,26.82,52.844,59.239C470.715,310.993,447.538,337.58,417.871,337.58Z"
-                                        ></path>
-                                    </svg>
-                                    Sign up with Discord
-                                </Button>
-                                <Button className="w-full bg-white text-gray-900 hover:bg-gray-100 border border-gray-300 cursor-pointer">
-                                    <svg
-                                        className="mr-2 h-4 w-4"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                        data-prefix="fab"
-                                        data-icon="google"
-                                        role="img"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 488 512"
-                                    >
-                                        <path
-                                            fill="currentColor"
-                                            d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"
-                                        ></path>
-                                    </svg>
-                                    Sign up with Google
-                                </Button>
-                            </div>
-                            <div className="relative">
-                                <div className="absolute inset-0 flex items-center">
-                                    <Separator className="w-full" />
-                                </div>
-                                <div className="relative flex justify-center text-xs uppercase">
-                                    <span className="bg-card px-2 text-muted-foreground">
-                                        Or continue with
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="name">Username</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    placeholder="john_doe"
-                                    value={username}
-                                    onChange={(e) =>
-                                        setUsername(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="email">Email</Label>
-                                <Input
-                                    id="email"
-                                    type="email"
-                                    placeholder="m@example.com"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) =>
-                                        setPassword(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <Label htmlFor="confirm-password">
-                                    Confirm Password
-                                </Label>
-                                <Input
-                                    id="confirm-password"
-                                    type="password"
-                                    value={rePassword}
-                                    onChange={(e) =>
-                                        setRePassword(e.target.value)
-                                    }
-                                />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button className="w-full cursor-pointer" onClick={registerUser} disabled={isLoading}>
-                                {isLoading && <Loader2 className="animate-spin" />}
-                                Sign Up
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                    <div className="text-center mt-4">
-                        <span className="text-muted-foreground text-sm">
-                            Already have an account?{" "}
-                        </span>
-                        <Link
-                            to="/login"
-                            className="text-primary hover:underline text-sm font-medium"
-                        >
-                            Login
-                        </Link>
-                    </div>
+                <Button className="w-full bg-white text-gray-900 hover:bg-gray-100 border border-gray-300">
+                  <Google />
+                  Sign up with Google
+                </Button>
+              </div>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <Separator className="w-full" />
                 </div>
-            </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                </div>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="mt-2">Username</Label>
+                  <Input
+                    id="name"
+                    name="username"
+                    type="text"
+                    placeholder="John Doe"
+                    value={formData.username}
+                    onChange={handleInputChange}
+                  />
+                  {errors.username && <p className="text-sm text-red-500">{errors.username}</p>}
+                </div>
+                <div className="space-y-2 mt-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="m@example.com"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                  />
+                  {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+                </div>
+                <div className="space-y-2 mt-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                  />
+                  {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
+                </div>
+                <div className="space-y-2 mt-2">
+                  <Label htmlFor="confirm-password">Confirm Password</Label>
+                  <Input
+                    id="confirm-password"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                  />
+                  {errors.confirmPassword && <p className="text-sm text-red-500">{errors.confirmPassword}</p>}
+                </div>
+                <Button type="submit" className="w-full mt-4">
+                  Sign Up
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+          <div className="text-center mt-4">
+            <span className="text-muted-foreground text-sm">Already have an account? </span>
+            <Link to={{pathname: "/login", search:location.search}} className="text-primary hover:underline text-sm font-medium">
+              Login
+            </Link>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  )
 }
+
+
