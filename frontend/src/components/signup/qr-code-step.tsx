@@ -1,5 +1,6 @@
 import type React from "react"
 import { Button } from "@/components/ui/button"
+import { Skeleton } from "../ui/skeleton"
 
 interface QRCodeStepProps {
   qrCodeUrl: string | null
@@ -14,7 +15,7 @@ export function QRCodeStep({ qrCodeUrl, onSubmit }: QRCodeStepProps) {
         {qrCodeUrl ? (
           <img src={qrCodeUrl || "/placeholder.svg"} alt="2FA QR Code" className="mx-auto" />
         ) : (
-          <p>Loading QR code...</p>
+          <Skeleton className="h-[256px] w-[256px] ml-auto mr-auto"/>
         )}
       </div>
       <Button type="submit" className="w-full mt-4">

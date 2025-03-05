@@ -7,14 +7,15 @@ import chalk from "chalk";
 import { config } from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
 config();
-const {APP_PORT} = process.env;
-const app = express(); 
+const { APP_PORT } = process.env;
+const app = express();
 
 app.use(morgan("combined"));
 app.use(helmet());
 app.use(cors({
-    origin: "*",
-    methods: ["POST", "GET", "PUT", "CREATE"],
+  origin: "http://localhost:5173",
+  methods: ["POST", "GET", "PUT", "CREATE"],
+  credential: true,
 }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,5 +24,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/auth", authRoutes);
 
 app.listen(APP_PORT, () => {
-    console.log(chalk.green(`✓ Server listening on port ${APP_PORT}`));
+  console.log(chalk.green(`✓ Server listening on port ${APP_PORT}`));
 })

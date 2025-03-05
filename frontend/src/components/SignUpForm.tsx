@@ -7,6 +7,9 @@ import { RegistrationStep } from "./signup/registration-step"
 import { QRCodeStep } from "./signup/qr-code-step"
 import { TwoFactorStep } from "./login/two-factor-step"
 import { SocialLoginButtons } from "./SocialLoginButtons"
+import type { AxiosResponse } from "axios"
+import { toast } from "sonner"
+import url from "url";
 
 type FormData = {
   username: string
@@ -88,35 +91,17 @@ export default function SignUpForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (step === 1) {
-      // Initial signup
+    console.log(formData);
+    // TODO: Registration process (It was shitty)
+    if (step == 1) {
       try {
-        const response = await api.post(`/register?client_id=${location.search.split('&')}`, formData)
-        if (response.data.requiresTwoFactor) {
-          setQrCodeUrl(response.data.qrCodeUrl)
-          setStep(2)
-        } else {
-          // Redirect to the provided URL if signup is complete
-          window.location.href = response.data.redirectUrl
-        }
-      } catch (error) {
-        console.error("Signup error:", error)
-        // Handle error (e.g., display error message)
-      }
-    } else if (step === 2) {
-      // User has seen the QR code, move to 2FA verification
-      setStep(3)
-    } else {
-      // 2FA verification
-      try {
-        const response = await api.post("/verify-2fa", {
-          twoFactorCode: formData.twoFactorCode,
-        })
-        // Redirect to the provided URL after successful 2FA setup
-        window.location.href = response.data.redirectUrl
-      } catch (error) {
-        console.error("2FA verification error:", error)
-        setErrors((prev) => ({ ...prev, twoFactorCode: "Invalid 2FA code" }))
+        const urlParams = url.parse(`/register${location.search}`)
+        console.log(urlParams);
+        const data: AxiosResponse = await api.post(`/register${location.search}`, formData);
+        console.log(data);
+      } catch (err: unknown) {
+        console.error(err);
+        toast("Error", {description: "An unexpected error occurred (maybe the server is unreachable ?). Contact your system admin.", position: "top-left", duration: 6000})
       }
     }
   }

@@ -13,26 +13,27 @@ interface TwoFactorStepProps {
 export function TwoFactorStep({ twoFactorCode, error, handleOTPChange, onSubmit }: TwoFactorStepProps) {
   return (
     <form onSubmit={onSubmit}>
-      <div className="space-y-2">
+      <div className="space-y-2 d-flex">
         <Label htmlFor="twoFactorCode">2FA Code</Label>
-        <InputOTP maxLength={6} value={twoFactorCode} onChange={handleOTPChange} className="w-full">
-          <InputOTPGroup>
-            <InputOTPSlot index={0} />
-            <InputOTPSlot index={1} />
-            <InputOTPSlot index={2} />
-          </InputOTPGroup>
-          <InputOTPSeparator />
-          <InputOTPGroup>
-            <InputOTPSlot index={3} />
-            <InputOTPSlot index={4} />
-            <InputOTPSlot index={5} />
-          </InputOTPGroup>
-        </InputOTP>
-
+        <div className="place-content-center w-fit mr-auto ml-auto">
+          <InputOTP maxLength={6} value={twoFactorCode} onChange={handleOTPChange}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
         {error && <p className="text-sm text-red-500">{error}</p>}
       </div>
       <Button type="submit" className="w-full mt-4">
-        Login
+        Submit
       </Button>
     </form>
   )

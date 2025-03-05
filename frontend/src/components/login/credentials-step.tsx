@@ -13,7 +13,7 @@ interface CredentialsStepProps {
 export function CredentialsStep({ formData, errors, handleInputChange, onSubmit }: CredentialsStepProps) {
   return (
     <form onSubmit={onSubmit}>
-      <div className="space-y-2">
+      <div className="space-y-2  mt-2">
         <Label htmlFor="identifier">Username or Email</Label>
         <Input
           id="identifier"
@@ -25,7 +25,7 @@ export function CredentialsStep({ formData, errors, handleInputChange, onSubmit 
         />
         {errors.identifier && <p className="text-sm text-red-500">{errors.identifier}</p>}
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 mt-2">
         <Label htmlFor="password">Password</Label>
         <Input id="password" name="password" type="password" value={formData.password} onChange={handleInputChange} />
         {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
