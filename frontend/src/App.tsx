@@ -1,17 +1,24 @@
-import {BrowserRouter as Router, Routes, Route} from "react-router";
-import Login from "./pages/Login";
-import Register from "./pages/Register"
-// import './App.css'
+import { BrowserRouter as Router, Routes, Route } from "react-router"
+import { ThemeProvider } from "./contexts/ThemeContext"
+import Layout from "./components/Layout"
+import LoginForm from "./components/LoginForm"
+import SignUpForm from "./components/SignUpForm"
 
 function App() {
-    return (
-        <Router basename="/">
-            <Routes>
-                <Route path="/login" element={<Login />}></Route>
-                <Route path="/signup" element={<Register />}></Route>
-            </Routes>
-        </Router>
-    );
+  return (
+    <ThemeProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LoginForm />} />
+            <Route path="login" element={<LoginForm />} />
+            <Route path="signup" element={<SignUpForm />} />
+          </Route>
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
+
