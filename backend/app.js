@@ -1,7 +1,6 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
-import bodyParser from "body-parser";
 import cors from "cors";
 import chalk from "chalk";
 import { config } from "dotenv";
@@ -15,10 +14,10 @@ app.use(helmet());
 app.use(cors({
   origin: "http://localhost:5173",
   methods: ["POST", "GET", "PUT", "CREATE"],
-  credential: true,
+  credentials: true,
 }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routers
 app.use("/auth", authRoutes);
