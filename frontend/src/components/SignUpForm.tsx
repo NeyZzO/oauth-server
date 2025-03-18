@@ -9,7 +9,6 @@ import { TwoFactorStep } from "./login/two-factor-step"
 import { SocialLoginButtons } from "./SocialLoginButtons"
 import type { AxiosResponse } from "axios"
 import { toast } from "sonner"
-import url from "url";
 
 type FormData = {
   username: string
@@ -24,7 +23,7 @@ type FormErrors = {
 }
 
 export default function SignUpForm() {
-    const location = useLocation();
+  const location = useLocation();
   const [step, setStep] = useState<1 | 2 | 3>(1)
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -95,10 +94,16 @@ export default function SignUpForm() {
     // TODO: Registration process (It was shitty)
     if (step == 1) {
       try {
-        const urlParams = url.parse(`/register${location.search}`)
-        console.log(urlParams);
-        const data: AxiosResponse = await api.post(`/register${location.search}`, formData);
-        console.log(data);
+        const data: AxiosResponse = await api.post(`/register${location.search}`, JSON.stringify(formData), {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        console.log(data); // ! For debug purposes, remove later
+        
+        if (data.status == 201) {
+          return setStep(2);
+        }
       } catch (err: unknown) {
         console.error(err);
         toast("Error", {description: "An unexpected error occurred (maybe the server is unreachable ?). Contact your system admin.", position: "top-left", duration: 6000})
