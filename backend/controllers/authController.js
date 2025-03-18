@@ -51,7 +51,15 @@ export default class AuthController {
             return res.status(400).json({ message: "Passwords do not match", type: "confirmPassword" });
         }
 
-        console.log("Received a register for user " + username)
+
+        // Check if username and email are already in use
+        const userWithUsername = await User.findOne({ where: {username} });
+        if (userWithUsername) return res.status(400).json({ message: "Username already in use", type: "username" });
+        const userWithEmail = await User.findOne({where: {
+            email
+        }});
+        if(userWithEmail) return res.status(400).json({message: "Email already in use", type: "email"});
+
 
         res.status(201).json({message: "Created"});
 
