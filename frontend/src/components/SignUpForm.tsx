@@ -8,7 +8,8 @@ import { QRCodeStep } from "./signup/qr-code-step"
 import { TwoFactorStep } from "./login/two-factor-step"
 import { SocialLoginButtons } from "./SocialLoginButtons"
 import type { AxiosResponse } from "axios"
-import { toast } from "sonner"
+import { toast } from "sonner";
+import { Separator } from "./ui/separator"
 
 type FormData = {
   username: string
@@ -117,6 +118,14 @@ export default function SignUpForm() {
       description={step === 1 ? "Create your account" : step === 2 ? "Set up 2FA" : "Verify 2FA"}
     >
       {step === 1 && <SocialLoginButtons />}
+      {step === 1 && <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <Separator className="w-full" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+                </div>
+              </div>}
       {step === 1 ? (
         <RegistrationStep
           formData={formData}

@@ -7,6 +7,7 @@ import api from "../lib/api"
 import { FormWrapper } from "./form-wrapper"
 import { CredentialsStep } from "./login/credentials-step"
 import { SocialLoginButtons } from "./SocialLoginButtons"
+import { Separator } from "@radix-ui/react-separator"
 
 type FormData = {
   identifier: string
@@ -60,6 +61,14 @@ export default function LoginForm() {
   return (
     <FormWrapper title="Login" description="Enter your credentials">
       <SocialLoginButtons />
+      <div className="relative">
+        <div className="absolute inset-0 flex items-center">
+          <Separator className="w-full" />
+        </div>
+        <div className="relative flex justify-center text-xs uppercase">
+          <span className="bg-card px-2 text-muted-foreground">Or continue with</span>
+        </div>
+      </div>
       <CredentialsStep
         formData={formData}
         errors={errors}
