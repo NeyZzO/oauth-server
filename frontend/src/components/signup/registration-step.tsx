@@ -60,6 +60,7 @@ export function RegistrationStep({ formData, errors, handleInputChange, onSubmit
           id="confirmPassword"
           name="confirmPassword"
           type="password"
+          className={`${errors.confirmPassword && "border-red-500"}`}
           value={formData.confirmPassword}
           onChange={handleInputChange}
         />

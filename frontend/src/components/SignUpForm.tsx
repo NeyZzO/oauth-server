@@ -105,8 +105,7 @@ export default function SignUpForm() {
         const data = JSON.parse(res.data);
         
         if (res.status == 201) {
-          // return setStep(2);
-          return;
+          return setStep(2);
         }
 
         if (res.status == 400) {
