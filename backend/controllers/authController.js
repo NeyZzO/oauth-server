@@ -13,7 +13,7 @@ export default class AuthController {
 
     static async register(req, res) {
         /// Data validation
-        const { email, username, password, rePassword } = req.body;
+        const { email, username, password, confirmPassword } = req.body;
         if (!email || !username || !password) {
             return res.status(400).json({ message: "All fields are required", type: email ? (username ? "password" : "username") : "email" });
         }
@@ -45,6 +45,10 @@ export default class AuthController {
         // Check if password contains at least one special character
         if (!/[!@#$%^&*]/.test(password)) {
             return res.status(400).json({ message: "Password must contain at least one special character", type: "password" });
+        }
+
+        if(password != confirmPassword) {
+            return res.status(400).json({ message: "Passwords do not match", type: "confirmPassword" });
         }
 
         console.log("Received a register for user " + username)

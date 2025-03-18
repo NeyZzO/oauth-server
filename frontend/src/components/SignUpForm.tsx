@@ -70,6 +70,7 @@ export default function SignUpForm() {
       case "password":
         return value ? (value.length >= 8 ? "" : "Password must be at least 8 characters") : "Password is required"
       case "confirmPassword":
+        console.log(value === formData.password ? "" : "Passwords do not match")
         return value === formData.password ? "" : "Passwords do not match"
       case "twoFactorCode":
         return value.length === 6 ? "" : "2FA code must be 6 digits"
@@ -89,21 +90,27 @@ export default function SignUpForm() {
     setErrors((prev) => ({ ...prev, twoFactorCode: validateField("twoFactorCode", value) }))
   }
 
+
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(formData);
-    // TODO: Registration process (It was shitty)
+    // We pass data to the backend to validate form
     if (step == 1) {
       try {
-        const data: AxiosResponse = await api.post(`/register${location.search}`, JSON.stringify(formData), {
+        const res: AxiosResponse = await api.post(`/register${location.search}`, JSON.stringify(formData), {
           headers: {
             "Content-Type": "application/json"
           }
         });
-        console.log(data); // ! For debug purposes, remove later
+        const data = JSON.parse(res.data);
         
-        if (data.status == 201) {
-          return setStep(2);
+        if (res.status == 201) {
+          // return setStep(2);
+          return;
+        }
+
+        if (res.status == 400) {
+          setErrors(prev => ({...prev, [data.type]: data.message}));
         }
       } catch (err: unknown) {
         console.error(err);
