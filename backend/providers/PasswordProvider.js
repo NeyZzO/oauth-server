@@ -11,7 +11,7 @@ class PasswordProvider {
      */
     static async hash(pass) {
         const hashed = await argon2.hash(pass, {
-            secret: APP_PASSWORD_SECRET
+            secret: Buffer.from(APP_PASSWORD_SECRET)
         });
         return hashed;
     }

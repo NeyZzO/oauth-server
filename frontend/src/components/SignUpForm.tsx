@@ -134,6 +134,8 @@ export default function SignUpForm() {
         );
         const data = JSON.parse(res.data);
 
+        setQrCodeUrl(data.qr_code_img);
+        console.log(data);
         if (res.status == 201) {
           return setStep(2);
         }
@@ -149,6 +151,17 @@ export default function SignUpForm() {
           position: "top-left",
           duration: 6000,
         });
+      }
+    } else if (step == 2) {
+      setStep(3);
+    } else if (step == 3) {
+      const res = await api.post(`/verify${location.search}`, {code: formData.twoFactorCode});
+      if (res.status == 202) {
+        const urlParams = new URLSearchParams(location.search);
+        const paramsOBJ = Object.fromEntries(urlParams);
+        window.location.href = `${paramsOBJ}?authorization_code=${(JSON.parse(res.data)).authorization_code}`
+      } else {
+        setErrors((prev) => ({...prev, twoFactorCode: "Invalid 2FA code"}))
       }
     }
   };

@@ -5,9 +5,44 @@ import cors from "cors";
 import chalk from "chalk";
 import { config } from "dotenv";
 import authRoutes from "./routes/auth.routes.js";
+import connectPg from "connect-pg-simple";
+import session from "express-session";
 config();
 const { APP_PORT } = process.env;
 const app = express();
+
+// SESSION
+
+const pgStore = connectPg(session);
+const pgSession = new pgStore({
+    conObject: {
+        user: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        database: process.env.DB_NAME,
+    },
+    tableName: "session",
+});
+
+app.use(
+    session({
+        secret: process.env.SECRET,
+        resave: false,
+        saveUninitialized: false,
+        name: "auth_session",
+        store: pgSession,
+        cookie: {
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            path: "/",
+            // domain: "localhost",
+            sameSite: "lax",
+            httpOnly: false,
+            secure: process.env.NODE_ENV === "production",
+        },
+    })
+);
+
 
 app.use(morgan((tokens, req, res) => {
   const format = [];

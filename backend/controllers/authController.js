@@ -5,6 +5,7 @@ import speakeasy from "speakeasy";
 import { User, OAuthClient, OAuthToken } from "../models/index.js";
 import PasswordProvider from "../providers/PasswordProvider.js";
 import chalk from "chalk";
+import qr from "qrcode"; 
 
 export default class AuthController {
     static isEmail(email) {
@@ -115,23 +116,29 @@ export default class AuthController {
 
         // * All the data is valid, we can now put everything in the database;
         try {
-            const hashed = PasswordProvider.hash(password);
+            const hashed = await PasswordProvider.hash(password);
+        
+            const secret_token = speakeasy.generateSecret() // 2FA secret
 
             const user = await User.create({
                 email,
                 username,
                 password: hashed,
                 isVerified: true,
-                twoFactorEnabled: true,
-                twoFactorSecret: speakeasy.generateSecret().base32,
+                twoFactorEnabled: false,
+                twoFactorSecret: secret_token.base32,
             });
             
             // TODO: Create session and store the UUID inside
+
+            req.session.uuid = user.uuid;
+            req.session.save();
             
-            return res.status(201).json({ message: "Created" });
+            const QRImage = await qr.toDataURL(secret_token.otpauth_url)
+            return res.status(201).json({ message: "Created", qr_code_img: QRImage});
         } catch (err) {
             console.error(chalk.red(err.message));
-            res.return(500).json({ message: "Unknown error" });
+            res.status(500).json({ message: "Unknown error" });
         }
     }
 
@@ -140,7 +147,24 @@ export default class AuthController {
     }
 
     static async verify(req, res) {
-        res.status(200).json({ message: "Verify route" });
+        const { code } = req.body;
+        const uuid = req.session.uuid;
+        //! May cause errors, see later to patch with user tests
+        if (!uuid) return res.status(400).json({message: "Bad request", description: "Error with the session, maybe you're unauthenticated"}); 
+        const user = await User.findByPk(uuid);
+        const userSecret = user.twoFactorSecret;
+        const verifyCode = await speakeasy.totp.verify({
+            secret: userSecret,
+            encoding: "base32",
+            token: code,
+        });
+        if (verifyCode) {
+            // TODO: implement authorization code creation logic
+            return res.status(200).json({success: true, message: "2FA code verified", authorization_code: "kakoukakou"})
+        } else {
+            return res.status(401).json({success: false, error: "invalid_grant", description: "Wrong code"})
+        }
+    
     }
 
     static async refresh(req, res) {
